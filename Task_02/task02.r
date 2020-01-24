@@ -1,4 +1,4 @@
-#
+setwd("C:\\Users\\yogur\\Desktop\\Evolution\\Tasks\\Task_02")
 Data <- read.csv("http://jonsmitchell.com/data/beren.csv")
 
 # Ways to look at the object
@@ -60,3 +60,44 @@ head(beren3)
 write.csv(beren3, "beren_new.csv", quote=F, row.names=FALSE)
 # makes a new .csv file out of our beren3 variable,
 # saves it without quotation marks on the row names
+
+
+
+# PART B
+
+# Question 1:
+# Hypothesis 1 doesn't work because we don't have his
+# weight.
+# Hypothesis 2 doesn't work because "a relationship"
+# is meaningless.
+setwd()
+beren3 <- read.csv("beren_new.csv", stringsAsFactors=F)
+
+Feeds <- which(beren3$event == "bottle")
+avgMilk <- mean(beren3$value[Feeds])
+
+avgFeed <- tapply(beren3$value[Feeds], beren3$age[Feeds], mean)
+varFeed <- tapply(beren3$value[Feeds], beren3$age[Feeds], var)
+numFeeds<- tapply(beren3$value[Feeds], beren3$age[Feeds], length)
+totalFeed <- tapply(beren3$value[Feeds], beren3$age[Feeds], sum)
+
+cor(beren3$value[Feeds], beren3$age[Feeds])
+cor.test(beren3$value[Feeds], beren3$age[Feeds])
+
+berenCor <- cor.test(beren3$value[Feeds], beren3$age[Feeds])
+summary(berenCor)
+
+berenANOVA <- aov(beren3$value[Feeds] ~ beren3$caregiver[Feeds])
+boxplot(beren3$value[Feeds] ~ beren$caregiver[Feeds], xlab="who gave the bottle", ylab = "amount of milk consumed (oz)")
+
+par(las=1, mar=c(5, 5, 1, 1), mgp=c(2, 0.5, 0), tck=-0.01)
+plot(as.numeric(names(totalFeed)), totalFeed, type="b", pch=16, xlab="age in days", ylab="ounces of milk")
+abline(h=mean(totalFeed), lty=2, col='red')
+pdf("r02b-totalMilkByDay.pdf", height=4, width=4)
+par(las=1, mar=c(5,5,1,1), mgp=c(2,0.5,0), tck=-0.01)
+plot(as.numeric(names(totalFeed)), totalFeed, type="b", pch=16, xlab="age in days", ylab="ounces of milk")
+abline(h=mean(totalFeed), lty=2, col='red')
+dev.off()
+# Question 2: There's no information given about
+# actual consumption, just consumption while Beren
+# is at daycare.
