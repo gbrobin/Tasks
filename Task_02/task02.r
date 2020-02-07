@@ -101,3 +101,20 @@ dev.off()
 # Question 2: There's no information given about
 # actual consumption, just consumption while Beren
 # is at daycare.
+
+#Part C
+beren3 <- beren2[order(beren$age),]
+Feeds <-which(Data[,9] == "bottle")
+bf <- beren[Feeds,]
+# names the subset of Beren's data that we defined 
+# as feeds "bf"
+
+
+#> colnames(Data)
+#[1] "ï..year"      "month"        "day"         
+#[4] "dotw"         "start_hour"   "start_minute"
+#[7] "end_hour"     "end_minute"   "event"       
+#[10] "value"        "units"        "caregiver"   
+
+beren$caregiver
+#^displays caregiver column in order
